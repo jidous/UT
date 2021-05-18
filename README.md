@@ -68,6 +68,27 @@ git bash界面
 
 > 此操作会涉及扫码授权操作，按照提示即可。在Mac中可能会涉及到权限的问题。
 
+# Travis 支持 (时间好像不能精确控制,和第一次运行时间有关)
+
+## 把真实的配置文件, config_of_mine.json 放到工程目录
+按照config.json的格式填写.   
+<font color=red>此文件**不会**提交到github</font>
+## 加密你的配置
+运行
+>  python3 encrypconfig.py  
+> 注意,如果您只需要更新配置,可以在环境变量里面设置一个 ENCKEY=your_old_passsword 来重用以前的密码,样就不用重新更新 travis 环境变量了,建议把此key写在 config_of_mine.json中,方便查看
+会生成 config_of_mine.json.enc 文件
+
+## 将key 写入环境变量
+   1. 删除 .Travis.yml 下面 global 节点 (这个是我的,其他人解不开)
+   2. 加入环境变量(两种方式,第二种不需要安装travis 直接网页操作);
+       + 运行 `travis encrypt ENCKEY=上一步提示的key --add`
+       + 第2步骤也可以直接在travis网页端设置 环境变量,
+## 提交,并在travis 中关联此项目.
+设置每天执行一次.
+> 为什么用加密文件的方式??
+> 因为travis加密有很多字符需要转义,哪些需要转义我也懒得去研究了。
+
 # 通知推送方式
 
 ## 1.邮箱
@@ -103,6 +124,8 @@ git bash界面
 # 同步上游代码
 
 手动或安装[pull](https://github.com/apps/pull)应用。
+
+
 
 # 申明
 
